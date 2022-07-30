@@ -291,12 +291,12 @@ class Verifier (object):
                 self.b = bytes_to_long(bytes_b)
             else:
                 self.b = get_random_of_length( 32 )
-            self.B = (k*self.v + pow(g, self.b, N)) % N
-            self.u = H(hash_class, self.A, self.B, width=len(long_to_bytes(N)))
-            self.S = pow(self.A*pow(self.v, self.u, N ), self.b, N)
-            self.K = hash_class( long_to_bytes(self.S) ).digest()
-            self.M = calculate_M( hash_class, N, g, self.I, self.s, self.A, self.B, self.K )
-            self.H_AMK = calculate_H_AMK( hash_class, self.A, self.M, self.K )
+        self.B = (k*self.v + pow(g, self.b, N)) % N
+        self.u = H(hash_class, self.A, self.B, width=len(long_to_bytes(N)))
+        self.S = pow(self.A*pow(self.v, self.u, N ), self.b, N)
+        self.K = hash_class( long_to_bytes(self.S) ).digest()
+        self.M = calculate_M( hash_class, N, g, self.I, self.s, self.A, self.B, self.K )
+        self.H_AMK = calculate_H_AMK( hash_class, self.A, self.M, self.K )
 
 
     def authenticated(self):

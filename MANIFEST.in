@@ -1,4 +1,0 @@
-include LICENSE
-include *.txt
-recursive-include srp *.py
-recursive-include srp *.rst
