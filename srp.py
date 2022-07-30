@@ -167,17 +167,6 @@ def get_random_of_length( nbytes ):
     return get_random( nbytes ) | (1 << offset)
 
 
-def old_H( hash_class, s1, s2 = '', s3=''):
-    if isinstance(s1, six.integer_types):
-        s1 = long_to_bytes(s1)
-    if s2 and isinstance(s2, six.integer_types):
-        s2 = long_to_bytes(s2)
-    if s3 and isinstance(s3, six.integer_types):
-        s3 = long_to_bytes(s3)
-    s = s1 + s2 + s3
-    return long(hash_class(s).hexdigest(), 16)
-
-
 def H( hash_class, *args, **kwargs ):
     width = kwargs.get('width', None)
 
@@ -302,18 +291,6 @@ class Verifier (object):
     def authenticated(self):
         return self._authenticated
 
-
-    def get_username(self):
-        return self.I
-
-
-    def get_ephemeral_secret(self):
-        return long_to_bytes(self.b)
-
-
-    def get_session_key(self):
-        return self.K if self._authenticated else None
-
     # returns (bytes_s, bytes_B) on success, (None,None) if SRP-6a safety check fails
     def get_challenge(self):
         if self.safety_failed:
@@ -367,19 +344,6 @@ class User (object):
 
     def authenticated(self):
         return self._authenticated
-
-
-    def get_username(self):
-        return self.I
-
-
-    def get_ephemeral_secret(self):
-        return long_to_bytes(self.a)
-
-
-    def get_session_key(self):
-        return self.K if self._authenticated else None
-
 
     def start_authentication(self):
         return (self.I, long_to_bytes(self.A))
